@@ -1,0 +1,32 @@
+plugins{
+    Id'java'
+    Id'aplication
+}
+Repositories{
+    mavenCentral()
+}
+
+Dependencies{
+    Implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    Implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    Implementation 'com.sun.xml.bind:jaxb-impl:2.3.0.1'
+    Implementation 'com.sun.xml.bind:jaxb-core:2.3.0.1'
+    Implementation 'javax.activation:activation:1.1.1'
+}
+
+Task generateClassesFromWsdl(type:JavaExec){
+    Classpath configurations.compile
+    Main= 'com.sun.tools.internal.ws.WsImport'
+    Args '-s','c:\\programe_files\\java\\','-p','com.ejemplo.wsdl',
+    'http://ejemplo.wsdl'
+}
+
+    Task.withType(JavaCompile){
+        option.encoding= 'UTF-8'
+    }
+
+    Tasks.named('clean'){
+        doLast{
+            delete'build'
+        }
+    }
